@@ -1,0 +1,57 @@
+{
+  "_hinweis": "Regeln für den Rechenblatt-Generator. Pro Gruppe: erlaubte Rechenarten (ASCII: * = Mal, / = Geteilt), Zahlenraum, Anzahl Kettenaufgaben (a ± b) op c von 20, erlaubte Faktoren/Teiler. Feste Regeln im Generator: Ergebnis ganzzahlig und >= 0, Teilen ohne Rest, Rechenarten gemischt, leicht steigend, keine zwei identischen Aufgaben.",
+  "A": {
+    "rechenarten": ["+", "-"],
+    "maxZahl": 100,
+    "maxErgebnis": 100,
+    "kettenanzahl": 0,
+    "kettenarten": [],
+    "faktoren": [],
+    "zehneruebergang": true
+  },
+  "B": {
+    "rechenarten": ["+", "-", "*"],
+    "maxZahl": 100,
+    "maxErgebnis": 100,
+    "kettenanzahl": 4,
+    "kettenarten": ["*"],
+    "faktoren": [2, 3, 4, 5, 10],
+    "zehneruebergang": true
+  },
+  "C": {
+    "rechenarten": ["+", "-", "*", "/"],
+    "maxZahl": 100,
+    "maxErgebnis": 100,
+    "kettenanzahl": 5,
+    "kettenarten": ["*", "/"],
+    "faktoren": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "zehneruebergang": true
+  },
+  "D": {
+    "rechenarten": ["+", "-", "*", "/"],
+    "maxZahl": 100,
+    "maxErgebnis": 100,
+    "kettenanzahl": 6,
+    "kettenarten": ["*", "/"],
+    "faktoren": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "zehneruebergang": true
+  },
+  "E": {
+    "rechenarten": ["+", "-", "*", "/"],
+    "maxZahl": 200,
+    "maxErgebnis": 500,
+    "kettenanzahl": 6,
+    "kettenarten": ["*", "/"],
+    "faktoren": [2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40],
+    "zehneruebergang": true
+  },
+  "F": {
+    "rechenarten": ["+", "-", "*", "/"],
+    "maxZahl": 500,
+    "maxErgebnis": 500,
+    "kettenanzahl": 8,
+    "kettenarten": ["*", "/"],
+    "faktoren": [2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50],
+    "zehneruebergang": true
+  }
+}
