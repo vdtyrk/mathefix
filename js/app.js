@@ -25,6 +25,8 @@ async function kn() {
 }
 
 function be(e) {
+  // Eltern-Einstellungen nachrüsten: Pause jetzt in Sekunden (Standard 30), Master-Modus
+  e.eltern && (e.eltern.pausenSekunden ?? (e.eltern.pausenSekunden = 30), e.eltern.masterModus ?? (e.eltern.masterModus = !1));
   for (const n of e.kinder) {
     n.auswertungFaellig ?? (n.auswertungFaellig = null), n.pauseNachRechenblattFaellig ?? (n.pauseNachRechenblattFaellig = !1), n.serie ?? (n.serie = {
       letzterTag: null,
@@ -115,7 +117,8 @@ function zn() {
     eltern: {
       pinHash: null,
       pinSalt: pe(),
-      pausenMinuten: 1,
+      pausenSekunden: 30,
+      masterModus: !1,
       spracheAn: !0,
       tempo: "normal",
       soundsAn: !0
@@ -517,7 +520,11 @@ function Ne(e, n) {
   return i
 }
 
+// Master-Modus (PIN 2017): schaltet zum Anschauen alle Blöcke und Blätter frei
+let masterModus = !1;
+
 function q(e, n) {
+  if (masterModus) return !0;
   const i = Bn(),
     t = i.findIndex(s => s.id === n);
   if (t < 0) return !1;
@@ -565,6 +572,17 @@ function Mn(e) {
         name: "journal"
       })
     }, "📒"), r("button", {
+      class: "knopf leise" + (masterModus ? " gewaehlt" : ""),
+      title: "Master-Zugang: alles zum Anschauen freischalten",
+      onclick: async () => {
+        if (masterModus) {
+          masterModus = !1, e.stand.eltern.masterModus = !1, e.speichern(), e.zeige({ name: "levelkarte" });
+          return
+        }
+        const p = await L("Master-Zugang", "PIN eingeben – schaltet alle Blöcke und Blätter zum Anschauen frei.");
+        p === null || (p === "2017" ? (masterModus = !0, e.stand.eltern.masterModus = !0, e.speichern(), e.zeige({ name: "levelkarte" })) : alert("Falsche PIN."))
+      }
+    }, "🗝"), r("button", {
       class: "knopf leise",
       onclick: () => e.zeige({
         name: "eltern"
@@ -575,7 +593,9 @@ function Mn(e) {
       onclick: () => e.zeige({
         name: "profile"
       })
-    }, n.avatar)), a.append(s), i.append(a), n.auswertungFaellig) {
+    }, n.avatar)), a.append(s), i.append(a), masterModus && i.append(r("div", {
+    class: "banner"
+  }, "🗝 Master-Modus: alles freigeschaltet. Zum Beenden 🗝 erneut drücken.")), n.auswertungFaellig) {
     const c = n.auswertungFaellig;
     i.append(r("div", {
       class: "banner"
@@ -682,7 +702,7 @@ function Nn(e, n) {
     return
   }
   if (i.pauseNachRechenblattFaellig) {
-    i.pauseNachRechenblattFaellig = !1, i.pauseBisTs = Date.now() + e.stand.eltern.pausenMinuten * 6e4, e.speichern(), e.zeige({
+    i.pauseNachRechenblattFaellig = !1, i.pauseBisTs = Date.now() + e.stand.eltern.pausenSekunden * 1e3, e.speichern(), e.zeige({
       name: "pause",
       danach: {
         name: "block",
@@ -1297,7 +1317,7 @@ function jn(e, n) {
   const u = n[0],
     d = ["a", "b", "c"].every(m => ne(i, u + m)),
     h = i.gruppenAbschluesse.some(m => m.gruppe === u);
-  d && (!h || !U(i, u)) && (i.auswertungFaellig = u), i.pauseBisTs = Date.now() + e.stand.eltern.pausenMinuten * 6e4, e.speichern(), e.toene.blockFertig();
+  d && (!h || !U(i, u)) && (i.auswertungFaellig = u), i.pauseBisTs = Date.now() + e.stand.eltern.pausenSekunden * 1e3, e.speichern(), e.toene.blockFertig();
   const g = e.motivation.hole("block_fertig", i.name);
   e.tts.sprich(`${a} von 10 richtig. ${g}`);
   const o = r("div", {
@@ -2206,17 +2226,18 @@ function ii(e) {
     i = r("div", {
       class: "karte"
     });
-  i.append(r("label", {}, "Pausenlänge (Minuten, Standard 3)"));
+  i.append(r("label", {}, "Pausenlänge (Sekunden, Standard 30)"));
   const t = r("input", {
     class: "feld",
     type: "number",
-    min: "1",
-    max: "10",
-    value: String(n.pausenMinuten)
+    min: "10",
+    max: "600",
+    step: "10",
+    value: String(n.pausenSekunden)
   });
   t.addEventListener("change", () => {
-    const l = Math.min(10, Math.max(1, Number(t.value) || 3));
-    n.pausenMinuten = l, t.value = String(l), e.speichern()
+    const l = Math.min(600, Math.max(10, Number(t.value) || 30));
+    n.pausenSekunden = l, t.value = String(l), e.speichern()
   }), i.append(t);
   const a = (l, c, u) => {
     const d = r("input", {
@@ -2365,6 +2386,7 @@ async function si() {
       t = new fn,
       a = be(t.laden() ?? zn()),
       s = new En;
+    masterModus = a.eltern.masterModus === !0;
     s.aktiv = a.eltern.spracheAn, s.tempo = a.eltern.tempo;
     const l = new An;
     l.aktiv = a.eltern.soundsAn;

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-31 · Nachtrag: Master-Zugang & Pause 30 s
+
+- **Master-Zugang (PIN 2017):** 🗝-Button im Kopf der Levelkarte. Richtige PIN → ALLE Blöcke und Blätter zum Anschauen freigeschaltet (Banner sichtbar, Zustand wird gespeichert). Erneut drücken → wieder aus. Umsetzung: Kurzschluss in der Freischalt-Prüfung `q()` über Flag `masterModus`.
+- **Pflichtpause:** von Minuten auf Sekunden umgestellt, Standard **30 Sekunden**; Elternbereich-Einstellung jetzt „Pausenlänge (Sekunden, Standard 30)" (10–600). Alte Stände werden migriert (`be()`).
+- tests.html: +5 Tests (29/29 grün).
+
 ## 2026-08-31 · Sitzung „Baukasten & Rechenblatt-Ordnung" (Claude Code, Branch `entwicklung`)
 
 **Umstrukturierung**

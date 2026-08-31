@@ -61,6 +61,18 @@
         z = Wn(); Gn(z, aufgabe, 9); Gn(z, aufgabe, 7); Gn(z, aufgabe, 8);
         pruefe("3. Versuch richtig → 1 Stern", ge(z) === 1);
 
+        // --- Pause & Master-Modus ---
+        pruefe("Neuer Stand: Pause standardmäßig 30 Sekunden", zn().eltern.pausenSekunden === 30);
+        pruefe("Neuer Stand: Master-Modus aus", zn().eltern.masterModus === false);
+        const alt = { version: 1, kinder: [], eltern: { pausenMinuten: 1 } };
+        be(alt);
+        pruefe("Migration alter Stand → pausenSekunden 30 + masterModus", alt.eltern.pausenSekunden === 30 && alt.eltern.masterModus === false);
+        const testkind = Sn("Test", "🤖");
+        pruefe("Ohne Master: Block Lc gesperrt", q(testkind, "Lc") === false);
+        masterModus = true;
+        pruefe("Mit Master (PIN 2017): Block Lc und Blatt RB-Lc frei", q(testkind, "Lc") === true && q(testkind, "RB-Lc") === true);
+        masterModus = false;
+
         // --- Rechenblatt-Generator: leicht → schwer ---
         const regeln = await fetch("data/rechenblatt_regeln.json").then(r => r.json());
         const gruppen = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
