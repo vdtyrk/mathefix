@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mathefix – Logiktests</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <script defer src="js/app.js"></script>
+    <style>
+      body { padding: 20px; font-family: monospace; }
+      .ok { color: #a3e635; }
+      .fehler { color: #fb923c; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display:none"></div>
+    <h1>Mathefix – Logiktests</h1>
+    <div id="ergebnisse">läuft …</div>
+    <script>
+      window.addEventListener("load", async () => {
+        const ausgabe = document.getElementById("ergebnisse");
+        ausgabe.textContent = "";
+        let bestanden = 0, gescheitert = 0;
+        const pruefe = (name, bedingung) => {
+          const z = document.createElement("div");
+          z.className = bedingung ? "ok" : "fehler";
+          z.textContent = (bedingung ? "✔ " : "✘ ") + name;
+          ausgabe.append(z);
+          bedingung ? bestanden++ : gescheitert++;
+        };
+
+        // --- Rechenweg-Parser ---
+        const s1 = rechenwegSchritte(rechenwegParsen("5 + 7 - 4"));
+        pruefe("5+7-4: zwei Schritte", s1.length === 2);
+        pruefe("5+7-4: Zwischenergebnis 12, Ende 8", s1[0].ergebnis === 12 && s1[1].ergebnis === 8);
+        pruefe("5+7-4 ist Kette", schritteSindKette(s1));
+        const s2 = rechenwegSchritte(rechenwegParsen("50 - 4 * 8"));
+        pruefe("50-4*8: Punkt vor Strich (erst 32, dann 18)", s2[0].ergebnis === 32 && s2[1].ergebnis === 18);
+        pruefe("50-4*8 ist KEINE Kette", !schritteSindKette(s2));
+        const s3 = rechenwegSchritte(rechenwegParsen("(30 - 6) / 4"));
+        pruefe("(30-6)/4: Klammer zuerst, Ende 6", s3[0].ergebnis === 24 && s3[1].ergebnis === 6);
+        pruefe("(30-6)/4 ist Kette", schritteSindKette(s3));
+        const s4 = rechenwegSchritte(rechenwegParsen("3 * 4 + 2 * 5"));
+        pruefe("3*4+2*5 = 22 in 3 Schritten", s4.length === 3 && s4[2].ergebnis === 22);
+        pruefe("Kaputter Rechenweg → null", rechenwegParsen("5 + + 3") === null);
+
+        // --- Bausteine ---
+        const bz = bausteinZahlen({ geschichte: "Elif hat 5 Zuckerl und 5 Kekse, dazu 7.", frage: "Wie viele?", rechenweg: "5 + 7 - 4" });
+        pruefe("Bausteine ohne Doppelte, fehlende 4 ergänzt", bz.join(",") === "5,7,4");
+
+        // --- Versuchslogik: 1. Fehler → Tipp, 3. Fehler → aufgedeckt ---
+        const aufgabe = { antwort: 8 };
+        let z = Wn();
+        pruefe("1. Fehler → hinweis", Gn(z, aufgabe, 9) === "hinweis" && z.hinweisSichtbar);
+        pruefe("2. Fehler → falsch", Gn(z, aufgabe, 7) === "falsch");
+        pruefe("3. Fehler → aufgedeckt", Gn(z, aufgabe, 6) === "aufgedeckt" && z.aufgedeckt);
+        pruefe("aufgedeckt → 0 Sterne", ge(z) === 0);
+        z = Wn(); Gn(z, aufgabe, 8);
+        pruefe("1. Versuch richtig → 3 Sterne", ge(z) === 3);
+        z = Wn(); Gn(z, aufgabe, 9); Gn(z, aufgabe, 8);
+        pruefe("2. Versuch richtig → 2 Sterne", ge(z) === 2);
+        z = Wn(); Gn(z, aufgabe, 9); Gn(z, aufgabe, 7); Gn(z, aufgabe, 8);
+        pruefe("3. Versuch richtig → 1 Stern", ge(z) === 1);
+
+        // --- Rechenblatt-Generator: leicht → schwer ---
+        const regeln = await fetch("data/rechenblatt_regeln.json").then(r => r.json());
+        const gruppen = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+        let aufsteigend = true, anzahlOk = true, kettenHinten = true, ganzzahlig = true, unikat = true;
+        for (const g of gruppen)
+          for (const seed of [1, 7, 42, 99, 12345]) {
+            const blatt = Un(regeln[g], seed);
+            anzahlOk &&= blatt.length === regeln[g].anzahl;
+            aufsteigend &&= blatt.every((a, i) => i === 0 || a.schwere >= blatt[i - 1].schwere);
+            const ersteKette = blatt.findIndex(a => a.kette);
+            kettenHinten &&= ersteKette < 0 || blatt.slice(ersteKette).every(a => a.kette);
+            ganzzahlig &&= blatt.every(a => Number.isInteger(a.loesung) && a.loesung >= 0);
+            unikat &&= new Set(blatt.map(a => a.term)).size === blatt.length;
+          }
+        pruefe("alle Blätter: 15 Aufgaben", anzahlOk);
+        pruefe("alle Blätter: Schwere aufsteigend (leicht → schwer)", aufsteigend);
+        pruefe("alle Blätter: Kettenaufgaben am Ende", kettenHinten);
+        pruefe("alle Blätter: Lösungen ganzzahlig und nie negativ", ganzzahlig);
+        pruefe("alle Blätter: keine doppelten Aufgaben", unikat);
+
+        // --- Alle 360 Rechenwege der Textaufgaben sind parsebar und stimmen ---
+        const aufgaben = await fetch("data/aufgaben.json").then(r => r.json());
+        let parsebar = 0, korrekt = 0;
+        for (const a of aufgaben) {
+          const baum = rechenwegParsen(a.rechenweg);
+          if (!baum) continue;
+          parsebar++;
+          const schritte = rechenwegSchritte(baum);
+          schritte[schritte.length - 1].ergebnis === a.antwort && korrekt++;
+        }
+        pruefe(`alle 360 Rechenwege parsebar (${parsebar}/360)`, parsebar === 360);
+        pruefe(`alle Rechenwege ergeben die richtige Antwort (${korrekt}/360)`, korrekt === 360);
+
+        const fazit = document.createElement("h2");
+        fazit.className = gescheitert === 0 ? "ok" : "fehler";
+        fazit.textContent = `${bestanden} bestanden, ${gescheitert} gescheitert`;
+        ausgabe.prepend(fazit);
+      });
+    </script>
+  </body>
+</html>

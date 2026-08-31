@@ -1,6 +1,6 @@
 // Mathefix Service Worker: Netz zuerst, Cache als Ersatz → nach dem ersten
 // Besuch funktioniert die App auch offline. Keine externen Dienste.
-const CACHE = "mathefix-v1";
+const CACHE = "mathefix-v2";
 
 self.addEventListener("install", () => {
   self.skipWaiting();

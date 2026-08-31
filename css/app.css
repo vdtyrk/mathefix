@@ -1,0 +1,1048 @@
+:root {
+    --grund: #0b1020;
+    --karte: #151b33;
+    --karte2: #1c2445;
+    --rand: #232b4d;
+    --rand2: #2a3563;
+    --text: #eaf0ff;
+    --text-leise: #9aa4cf;
+    --cyan: #22d3ee;
+    --lime: #a3e635;
+    --pink: #f472b6;
+    --orange: #fb923c;
+    --violett: #a78bfa;
+    --gold: #facc15;
+    --rot: #fb7185;
+    --eingabe: #0f1530
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%
+}
+
+body {
+    background: var(--grund);
+    color: var(--text);
+    font-family: Segoe UI, Roboto, Helvetica Neue, sans-serif;
+    overscroll-behavior: none
+}
+
+#app {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column
+}
+
+button {
+    font-family: inherit
+}
+
+.laden {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 100vh;
+    color: var(--text-leise)
+}
+
+.laden-logo,
+.logo {
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: -.02em;
+    color: #fff
+}
+
+.laden-logo b,
+.logo b {
+    color: var(--cyan);
+    text-shadow: 0 0 14px var(--cyan)
+}
+
+.logo-blitz {
+    width: 26px;
+    height: 26px;
+    vertical-align: -4px;
+    margin-right: 6px
+}
+
+.schirm {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 12px 14px 20px
+}
+
+.kopf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0 12px
+}
+
+.kopf .rechts {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.karte {
+    background: var(--karte);
+    border: 1px solid var(--rand);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px
+}
+
+.knopf {
+    background: var(--karte2);
+    border: 1px solid var(--rand2);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .06s ease
+}
+
+.knopf:active {
+    transform: scale(.97)
+}
+
+.knopf.primaer {
+    background: var(--cyan);
+    color: var(--grund);
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px #22d3ee8c
+}
+
+.knopf.gruen {
+    background: var(--lime);
+    color: var(--grund);
+    border-color: var(--lime);
+    box-shadow: 0 0 14px #a3e63573
+}
+
+.knopf.leise {
+    background: transparent;
+    border-color: var(--rand2);
+    color: var(--text-leise)
+}
+
+.knopf.gross {
+    font-size: 19px;
+    padding: 14px 26px
+}
+
+.knopf:disabled {
+    opacity: .4;
+    cursor: default
+}
+
+.hinweis-leise {
+    color: var(--text-leise);
+    font-size: 13px
+}
+
+.abstand {
+    flex: 1
+}
+
+.profil-gitter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 18px
+}
+
+.profil-knopf {
+    width: 132px;
+    padding: 18px 10px;
+    text-align: center;
+    background: var(--karte);
+    border: 1px solid var(--rand);
+    border-radius: 18px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.profil-knopf:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 14px #22d3ee4d
+}
+
+.profil-avatar {
+    font-size: 44px;
+    display: block;
+    margin-bottom: 8px
+}
+
+.avatar-wahl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0
+}
+
+.avatar-wahl button {
+    font-size: 26px;
+    padding: 8px;
+    background: var(--karte2);
+    border: 2px solid var(--rand2);
+    border-radius: 12px;
+    cursor: pointer
+}
+
+.avatar-wahl button.gewaehlt {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan)
+}
+
+.feld {
+    width: 100%;
+    background: var(--eingabe);
+    border: 1px solid var(--rand2);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 17px
+}
+
+.feld:focus {
+    outline: none;
+    border-color: var(--cyan)
+}
+
+label {
+    display: block;
+    margin: 10px 0 4px;
+    color: var(--text-leise);
+    font-size: 14px
+}
+
+.gruppe-karte {
+    border-left: 4px solid var(--gfarbe, var(--cyan))
+}
+
+.gruppe-kopf {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px
+}
+
+.gruppe-tag {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: var(--grund);
+    background: var(--gfarbe, var(--cyan))
+}
+
+.gruppe-name {
+    font-weight: 700
+}
+
+.gruppe-sterne {
+    color: var(--gold);
+    font-size: 13px;
+    margin-left: auto;
+    white-space: nowrap
+}
+
+.abzeichen {
+    font-size: 20px;
+    filter: drop-shadow(0 0 6px var(--gold))
+}
+
+.kachel-reihe {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px
+}
+
+.modul-titel {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-leise);
+    margin: 14px 0 8px;
+    border-bottom: 1px solid var(--rand2);
+    padding-bottom: 4px
+}
+
+.kachel {
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--karte2);
+    border: 1px solid var(--rand2);
+    color: var(--text-leise);
+    cursor: pointer;
+    line-height: 1.5
+}
+
+.kachel .sterne {
+    color: var(--gold);
+    font-size: 12px;
+    display: block
+}
+
+.kachel.fertig {
+    color: var(--text)
+}
+
+.kachel.aktiv {
+    color: #fff;
+    border-color: var(--gfarbe, var(--cyan));
+    box-shadow: 0 0 0 2px var(--gfarbe, var(--cyan)), 0 0 18px var(--gfarbe, var(--cyan))
+}
+
+.kachel.gesperrt {
+    opacity: .4;
+    cursor: default
+}
+
+.gesperrt-gruppe {
+    opacity: .55
+}
+
+.banner {
+    background: var(--karte2);
+    border: 1px solid var(--lime);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-weight: 600
+}
+
+.aufgabe-schirm {
+    max-width: 760px
+}
+
+.fortschritt {
+    display: flex;
+    gap: 5px;
+    margin: 4px 0 10px
+}
+
+.fortschritt i {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--rand2)
+}
+
+.fortschritt i.geschafft {
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan)
+}
+
+.fortschritt i.jetzt {
+    background: var(--text-leise)
+}
+
+.geschichte {
+    font-size: 18px;
+    line-height: 1.55;
+    margin: 4px 0 8px
+}
+
+.frage {
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--lime);
+    margin-bottom: 10px
+}
+
+.symbol {
+    font-size: 26px;
+    float: right;
+    margin-left: 8px
+}
+
+.eingabe-zeile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px
+}
+
+.eingabe-anzeige {
+    flex: 1;
+    background: var(--eingabe);
+    border: 2px solid var(--cyan);
+    border-radius: 14px;
+    font-size: 32px;
+    font-weight: 800;
+    padding: 8px 16px;
+    color: #fff;
+    letter-spacing: .1em;
+    min-height: 56px;
+    text-align: right;
+    box-shadow: 0 0 18px #22d3ee59
+}
+
+.eingabe-anzeige.leer {
+    color: var(--text-leise)
+}
+
+.eingabe-anzeige.falsch {
+    border-color: var(--rot);
+    box-shadow: 0 0 18px #fb718580;
+    animation: wackeln .35s
+}
+
+@keyframes wackeln {
+
+    0%,
+    to {
+        transform: translate(0)
+    }
+
+    25% {
+        transform: translate(-7px)
+    }
+
+    75% {
+        transform: translate(7px)
+    }
+}
+
+.zahlenfeld {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px
+}
+
+.zahlenfeld button {
+    background: var(--karte2);
+    border: 1px solid var(--rand2);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 13px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 22px;
+    cursor: pointer;
+    touch-action: manipulation
+}
+
+.zahlenfeld button:active {
+    transform: scale(.96)
+}
+
+.zahlenfeld .los {
+    background: var(--cyan);
+    color: var(--grund);
+    box-shadow: 0 0 16px var(--cyan)
+}
+
+.hinweis-box {
+    background: var(--karte2);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    line-height: 1.5
+}
+
+.hinweis-box b {
+    color: var(--gold)
+}
+
+.loesung-box {
+    background: var(--karte2);
+    border: 1px solid var(--cyan);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    line-height: 1.55
+}
+
+.loesung-box b {
+    color: var(--cyan)
+}
+
+.figur-zeile {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 12px;
+    min-height: 96px
+}
+
+.blase {
+    background: var(--karte2);
+    border: 1px solid var(--lime);
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 15px;
+    line-height: 1.45;
+    flex: 1
+}
+
+.sterne-gross {
+    font-size: 26px;
+    color: var(--gold);
+    text-shadow: 0 0 12px var(--gold)
+}
+
+.pause-schirm {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1
+}
+
+.pause-zahl {
+    font-size: 84px;
+    font-weight: 900;
+    color: var(--cyan);
+    text-shadow: 0 0 26px var(--cyan);
+    font-variant-numeric: tabular-nums
+}
+
+.pause-tipp {
+    color: var(--text-leise);
+    font-size: 17px;
+    max-width: 420px;
+    line-height: 1.5
+}
+
+.gross-titel {
+    font-size: 26px;
+    font-weight: 900;
+    margin: 6px 0
+}
+
+.wert-reihe {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 10px 0
+}
+
+.wert-kachel {
+    background: var(--karte2);
+    border: 1px solid var(--rand2);
+    border-radius: 12px;
+    padding: 10px 16px;
+    text-align: center;
+    flex: 1;
+    min-width: 110px
+}
+
+.wert-kachel .zahl {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--cyan)
+}
+
+.wert-kachel .was {
+    font-size: 12px;
+    color: var(--text-leise)
+}
+
+.konfetti {
+    font-size: 40px;
+    animation: huepf .9s ease infinite alternate;
+    display: inline-block
+}
+
+@keyframes huepf {
+    0% {
+        transform: translateY(0)
+    }
+
+    to {
+        transform: translateY(-10px)
+    }
+}
+
+.konfetti-regen {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 40
+}
+
+.konfetti-regen i {
+    position: absolute;
+    top: -16px;
+    width: 10px;
+    height: 14px;
+    border-radius: 3px;
+    opacity: .95;
+    animation-name: konfetti-fall;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards
+}
+
+@keyframes konfetti-fall {
+    to {
+        transform: translateY(106vh) rotate(560deg);
+        opacity: .6
+    }
+}
+
+.rb-gitter {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px
+}
+
+.rb-aufgabe {
+    background: var(--karte);
+    border: 1px solid var(--rand);
+    border-radius: 10px;
+    padding: 7px 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap
+}
+
+.rb-aufgabe .term {
+    flex: 1
+}
+
+.rb-eingabe {
+    min-width: 46px;
+    padding: 4px 6px;
+    background: var(--eingabe);
+    border: 1px solid var(--rand2);
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    min-height: 28px
+}
+
+.rb-aufgabe.aktivfeld .rb-eingabe {
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan)
+}
+
+.rb-aufgabe.richtig {
+    border-color: var(--lime)
+}
+
+.rb-aufgabe.richtig .rb-eingabe {
+    border-color: var(--lime);
+    color: var(--lime)
+}
+
+.rb-aufgabe.falsch {
+    border-color: var(--rot)
+}
+
+.rb-aufgabe.falsch .rb-eingabe {
+    border-color: var(--rot);
+    color: var(--rot)
+}
+
+.rb-loesung {
+    color: var(--lime);
+    font-size: 13px;
+    margin-left: 4px
+}
+
+.rb-fuss {
+    position: sticky;
+    bottom: 0;
+    background: var(--grund);
+    padding: 10px 0 4px
+}
+
+.tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 8px 0
+}
+
+.tabelle th,
+.tabelle td {
+    border-bottom: 1px solid var(--rand);
+    padding: 7px 8px;
+    text-align: left
+}
+
+.tabelle th {
+    color: var(--text-leise);
+    font-weight: 600
+}
+
+.tab-leiste {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px
+}
+
+.tab-leiste .knopf.gewaehlt {
+    background: var(--cyan);
+    color: var(--grund);
+    border-color: var(--cyan)
+}
+
+.fehler-eintrag {
+    border-left: 3px solid var(--rot);
+    padding-left: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5
+}
+
+.journal-eintrag {
+    border-left: 3px solid var(--rand2);
+    padding-left: 10px;
+    margin: 8px 0;
+    font-size: 14px
+}
+
+.modal-hintergrund {
+    position: fixed;
+    inset: 0;
+    background: #040610bf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 16px
+}
+
+.modal {
+    background: var(--karte);
+    border: 1px solid var(--rand2);
+    border-radius: 16px;
+    padding: 18px;
+    width: 100%;
+    max-width: 380px
+}
+
+.modal h3 {
+    margin: 0 0 10px
+}
+
+.pin-anzeige {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 12px 0
+}
+
+.pin-punkt {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--rand2)
+}
+
+.pin-punkt.voll {
+    background: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan)
+}
+
+@media(min-width:700px) {
+    .aufgabe-schirm .karte {
+        display: grid;
+        grid-template-columns: 1fr 250px;
+        column-gap: 18px
+    }
+
+    .aufgabe-schirm .karte>* {
+        grid-column: 1
+    }
+
+    .aufgabe-schirm .karte>.zahlenfeld {
+        grid-column: 2;
+        grid-row: 1 / span 6;
+        align-self: center;
+        margin-top: 0
+    }
+
+    .aufgabe-schirm .geschichte {
+        font-size: 19px
+    }
+}
+
+@media(max-width:420px) {
+    .rb-gitter {
+        grid-template-columns: repeat(2, 1fr)
+    }
+}
+
+/* ============================================================
+   Zahlen-Baukasten (Zieh-Bausteine + Kästchen untereinander)
+   ============================================================ */
+.baukasten {
+    margin: 12px 0;
+    padding: 12px;
+    background: var(--karte2);
+    border: 1px solid var(--rand2);
+    border-radius: 14px
+}
+
+.bk-titel {
+    color: var(--text-leise);
+    font-size: 14px;
+    margin-bottom: 8px
+}
+
+.bk-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px
+}
+
+.bk-chip {
+    min-width: 46px;
+    padding: 8px 12px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--grund);
+    background: var(--cyan);
+    border: none;
+    border-radius: 10px;
+    cursor: grab;
+    touch-action: none;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .35)
+}
+
+.bk-chip:active {
+    cursor: grabbing;
+    transform: scale(1.06)
+}
+
+.bk-geist {
+    position: fixed;
+    z-index: 99;
+    transform: translate(-50%, -120%);
+    pointer-events: none;
+    opacity: .9
+}
+
+.bk-rechnung {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.bk-zeile {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.bk-op {
+    width: 26px;
+    text-align: right;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold)
+}
+
+.bk-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    height: 44px;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--text);
+    background: var(--grund);
+    border: 2px dashed var(--rand2);
+    border-radius: 10px;
+    cursor: pointer
+}
+
+.bk-slot.ziel {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan)
+}
+
+.bk-slot.voll {
+    border-style: solid
+}
+
+.bk-slot.passt {
+    border-color: var(--lime);
+    color: var(--lime)
+}
+
+.bk-slot.voll:not(.passt) {
+    border-color: var(--orange);
+    color: var(--orange)
+}
+
+.bk-ergebnis {
+    border-top: 2px solid var(--rand2);
+    padding-top: 6px;
+    margin-top: 2px
+}
+
+.bk-frage {
+    min-width: 58px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-leise)
+}
+
+.bk-schritt-nr {
+    width: 22px;
+    color: var(--text-leise);
+    font-weight: 700
+}
+
+.bk-merker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--violett);
+    background: var(--grund);
+    border: 2px solid var(--violett);
+    border-radius: 10px
+}
+
+/* ============================================================
+   Illustrative Aufdeckung (nach dem 3. Fehler)
+   ============================================================ */
+.illu-schritte {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.illu-zeile {
+    opacity: 0;
+    animation: illu-auf .6s ease forwards
+}
+
+@keyframes illu-auf {
+    from {
+        opacity: 0;
+        transform: translateY(6px)
+    }
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.illu-term {
+    font-size: 21px;
+    font-weight: 800
+}
+
+.illu-ergebnis {
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--lime)
+}
+
+.illu-bild {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-top: 2px
+}
+
+.illu-plus {
+    color: var(--gold);
+    font-weight: 900
+}
+
+.illu-weg {
+    opacity: .35;
+    filter: grayscale(1);
+    text-decoration: line-through
+}
+
+/* Treppenform: Tippfelder für Zwischenergebnisse */
+.bk-rechnung {
+    max-width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px
+}
+
+.bk-tipp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    height: 44px;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--text);
+    background: var(--grund);
+    border: 2px solid var(--cyan);
+    border-radius: 10px;
+    cursor: pointer
+}
+
+.bk-tipp:empty::before {
+    content: "tippen";
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-leise)
+}
+
+.bk-tipp.aktiv {
+    box-shadow: 0 0 12px var(--cyan);
+    background: #10203a
+}
+
+.bk-tipp.passt {
+    border-color: var(--lime);
+    color: var(--lime)
+}
+
+.bk-tipp.daneben {
+    border-color: var(--orange);
+    color: var(--orange)
+}
