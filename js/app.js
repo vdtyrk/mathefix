@@ -1203,9 +1203,17 @@ function Pe(e, n, i) {
     title: "Hier kommt deine Antwort hin",
     onclick: () => bk?.steuerung.deaktivieren()
   }, "?");
+  // Weiter-Pfeil sitzt rechts neben dem Antwortfeld, innen im Kartenrahmen
+  // (Patron-Wunsch 31.08.2026 – ersetzt den breiten „Weiter"-Balken unten)
+  const w = r("button", {
+    class: "knopf primaer weiter-pfeil",
+    style: "display:none",
+    title: "Weiter",
+    onclick: () => R()
+  }, "→");
   h.append(r("div", {
     class: "eingabe-zeile"
-  }, g));
+  }, g, w));
   const o = r("div", {
     class: "hinweis-box",
     style: "display:none"
@@ -1247,12 +1255,6 @@ function Pe(e, n, i) {
   c.append(r("div", {
     class: "figur-zeile"
   }, S, k));
-  const w = r("button", {
-    class: "knopf primaer gross",
-    style: "display:none;margin-top:10px",
-    onclick: () => R()
-  }, "Weiter →");
-  c.append(w);
   let E = !1;
   const Z = (y, v) => {
       k.textContent = y, S.replaceChildren(C($(v))), e.tts.sprich(y)
@@ -1265,8 +1267,8 @@ function Pe(e, n, i) {
         E = !0, e.toene.richtig();
         const P = Fn(e) + 1,
           _ = P > 0 && P % 3 === 0 ? "serie_3" : a.versuche === 1 ? "richtig_1" : "richtig_mehr";
-        Z(e.motivation.hole(_, t.name), "jubel"), f.textContent = Be(ge(a)), f.style.display = "block", w.style.display = "inline-block"
-      } else v === "hinweis" ? (e.toene.falsch(), o.style.display = "block", k.textContent = e.motivation.hole("falsch_3", t.name), S.replaceChildren(C($("denkt"))), e.tts.sprich(`${k.textContent} ${n.hinweis}`), g.classList.add("falsch"), setTimeout(() => g.classList.remove("falsch"), 400), l = "", p()) : v === "aufgedeckt" ? (E = !0, e.toene.falsch(), m.replaceChildren(illustrationBauen(n)), m.style.display = "block", o.style.display = "none", Z(e.motivation.hole("fehler_geloggt", t.name), "neutral"), e.tts.sprich(`Die richtige Antwort ist ${n.antwort}. ${n.erklaerung}`), w.style.display = "inline-block") : (e.toene.falsch(), Z(e.motivation.hole("falsch_1_2", t.name), "denkt"), g.classList.add("falsch"), setTimeout(() => g.classList.remove("falsch"), 400), l = "", p())
+        Z(e.motivation.hole(_, t.name), "jubel"), f.textContent = Be(ge(a)), f.style.display = "block", w.style.display = "flex"
+      } else v === "hinweis" ? (e.toene.falsch(), o.style.display = "block", k.textContent = e.motivation.hole("falsch_3", t.name), S.replaceChildren(C($("denkt"))), e.tts.sprich(`${k.textContent} ${n.hinweis}`), g.classList.add("falsch"), setTimeout(() => g.classList.remove("falsch"), 400), l = "", p()) : v === "aufgedeckt" ? (E = !0, e.toene.falsch(), m.replaceChildren(illustrationBauen(n)), m.style.display = "block", o.style.display = "none", Z(e.motivation.hole("fehler_geloggt", t.name), "neutral"), e.tts.sprich(`Die richtige Antwort ist ${n.antwort}. ${n.erklaerung}`), w.style.display = "flex") : (e.toene.falsch(), Z(e.motivation.hole("falsch_1_2", t.name), "denkt"), g.classList.add("falsch"), setTimeout(() => g.classList.remove("falsch"), 400), l = "", p())
     },
     R = () => {
       B(), e.tts.stopp(), i.fertig({

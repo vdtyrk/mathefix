@@ -1046,3 +1046,27 @@ label {
     border-color: var(--orange);
     color: var(--orange)
 }
+
+/* Weiter-Pfeil rechts neben dem Antwortfeld (statt breitem Balken unten) */
+.weiter-pfeil {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+    border-radius: 50%;
+    font-size: 28px;
+    font-weight: 900;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pfeil-puls 1.2s ease-in-out infinite
+}
+
+@keyframes pfeil-puls {
+    0%, 100% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(1.12)
+    }
+}
